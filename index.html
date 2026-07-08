@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoC: Měření UX a webová analytika</title>
+    
+    <!-- SEM VLOŽTE KÓD Z GOOGLE TAG MANAGERU (Sekce <head>) -->
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 0; color: #333; background-color: #f9f9f9; }
+        header { background: #004ba0; color: #fff; padding: 2rem 1rem; text-align: center; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 0.5rem; margin-top: 2rem; }
+        .btn { display: inline-block; background: #28a745; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 5px; cursor: pointer; border: none; font-size: 1rem; font-weight: bold; }
+        .btn:hover { background: #218838; }
+        .fake-btn { display: inline-block; background: #dc3545; color: #fff; padding: 12px 24px; border-radius: 5px; cursor: default; margin-top: 10px; font-weight: bold; }
+        .form-box { background: #f1f7fd; padding: 20px; border-radius: 5px; margin-top: 2rem; border: 1px solid #cce0f5; }
+        input[type="text"], input[type="email"] { width: 100%; padding: 10px; margin: 10px 0 20px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .scroll-space { margin-top: 3rem; text-align: center; }
+        .spacer { height: 2000px; background: linear-gradient(to bottom, #ffffff, #e9ecef); border: 1px dashed #ccc; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    
+    <!-- SEM VLOŽTE KÓD Z GOOGLE TAG MANAGERU (Sekce <body>) -->
+
+    <header>
+        <h1>Návrh a implementace měřicích technik UX</h1>
+        <p>Proof of Concept (PoC) – Testovací prostředí pro GTM a GA4</p>
+    </header>
+
+    <div class="container">
+        <h2>1. Hlavní konverze (Key Event)</h2>
+        <p>Kliknutím na toto tlačítko nasimulujeme úspěšnou interakci, kterou v GTM zachytíme a pošleme do GA4 jako klíčovou událost.</p>
+        <a href="#konverze-uspesna" id="main-cta-button" class="btn">Odeslat nezávaznou poptávku</a>
+
+        <h2>2. UX Past: Dead Clicks (Mrtvá kliknutí)</h2>
+        <p>Tento prvek je vizuálně navržen jako tlačítko, ale neobsahuje žádný odkaz. Slouží k demonstraci toho, jak v GTM zachytit prokliky na neaktivní prvky.</p>
+        <div id="dead-click-trap" class="fake-btn">Stáhnout kompletní ceník (PDF)</div>
+
+        <div class="form-box">
+            <h2>3. UX Past: Rage Clicks (Frustrace uživatele)</h2>
+            <p>Tento formulář má zablokované odesílání (preventDefault). Po kliknutí na tlačítko se nic nestane, což donutí uživatele klikat opakovaně a zběsile. Ideální pro zachycení vzorce frustrace.</p>
+            <form id="rage-click-form" onsubmit="event.preventDefault(); alert('Formulář úmyslně nefunguje - testujeme Rage Clicks.');">
+                <label for="jmeno">Jméno:</label>
+                <input type="text" id="jmeno" placeholder="Zadejte své jméno">
+                
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" placeholder="Zadejte svůj e-mail">
+                
+                <button type="submit" id="broken-submit-btn" class="btn" style="background: #007bff;">Odeslat zprávu</button>
+            </form>
+        </div>
+
+        <div class="scroll-space">
+            <h2>4. Měření hloubky scrollování</h2>
+            <p>Níže začíná extrémně dlouhý prázdný prostor. Poslouží k tomu, abyste mohli v GA4 ověřit automaticky měřenou událost "scroll" (spouští se při dosažení 90 % délky stránky).</p>
+            <div class="spacer">
+                <p style="padding-top: 50px; color: #888;">Zde začíná dlouhý blok obsahu...</p>
+            </div>
+            <p><strong>Konec stránky.</strong> Zde by se měl aktivovat scroll trigger.</p>
+        </div>
+    </div>
+</body>
+</html>
